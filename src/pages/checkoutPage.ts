@@ -52,6 +52,8 @@ class CheckoutPage extends Page {
     getSubtotal: async () => parseCurrency(await this.elements.subtotal().getText()),
     getTax: async () => parseCurrency(await this.elements.tax().getText()),
     getTotal: async () => parseCurrency(await this.elements.total().getText()),
+    // The tax rate is shown in the label next to the tax value ("Tax (8%)");
+    // the label is the tax value's previous sibling in the app markup.
     getTaxRate: async () => parsePercentage(await this.elements.tax().previousElement().getText()),
   };
 }

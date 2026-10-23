@@ -1,14 +1,13 @@
 import { expect } from "@wdio/globals";
 import { HOST, MESSAGES, PATHS, ACCOUNTS } from "../../constants/constants";
-import { CATALOG } from "../../constants/testData";
+import { CATALOG, SHIPPING_INFO } from "../../constants/testData";
 import galleryPage from "../../pages/galleryPage";
 import cartPage from "../../pages/cartPage";
 import checkoutPage from "../../pages/checkoutPage";
 import { loginAs } from "../../utils/auth";
-import { round2 } from "../../utils/helpers";
+import { computeTotals, round2 } from "../../utils/helpers";
 
 const hoodie = CATALOG[0]; // After Hours Hoodie
-const shippingInfo = { firstName: "Ada", lastName: "Lovelace", postalCode: "94016" };
 
 describe("Checkout — sanity", () => {
   beforeEach(async () => {
@@ -22,7 +21,7 @@ describe("Checkout — sanity", () => {
     await cartPage.actions.proceedToCheckout();
     await expect(browser).toHaveUrl(`${HOST}${PATHS.checkout}`);
 
-    await checkoutPage.actions.fillShippingInfo(shippingInfo);
+    await checkoutPage.actions.fillShippingInfo(SHIPPING_INFO);
     await checkoutPage.actions.continueToSummary();
     await expect(checkoutPage.elements.finishButton()).toBeDisplayed();
 
@@ -47,8 +46,7 @@ describe("Checkout — sanity", () => {
 
     const taxRate = await cartPage.actions.getTaxRate();
     const subtotal = round2(hoodie.price + bottom.price);
-    const tax = round2(subtotal * taxRate);
-    const total = round2(subtotal + tax);
+    const { tax, total } = computeTotals(subtotal, taxRate);
 
     expect(round2(await cartPage.actions.getSubtotal())).toBe(subtotal);
     expect(round2(await cartPage.actions.getTax())).toBe(tax);
@@ -59,15 +57,14 @@ describe("Checkout — sanity", () => {
     await cartPage.actions.increaseQuantity(hoodieId);
 
     const adjustedSubtotal = round2(2 * hoodie.price + bottom.price);
-    const adjustedTax = round2(adjustedSubtotal * taxRate);
-    const adjustedTotal = round2(adjustedSubtotal + adjustedTax);
+    const { tax: adjustedTax, total: adjustedTotal } = computeTotals(adjustedSubtotal, taxRate);
 
     await expect(cartPage.elements.subtotal()).toHaveText(`$${adjustedSubtotal.toFixed(2)}`);
     await expect(cartPage.elements.tax()).toHaveText(`$${adjustedTax.toFixed(2)}`);
     await expect(cartPage.elements.total()).toHaveText(`$${adjustedTotal.toFixed(2)}`);
 
     await cartPage.actions.proceedToCheckout();
-    await checkoutPage.actions.fillShippingInfo(shippingInfo);
+    await checkoutPage.actions.fillShippingInfo(SHIPPING_INFO);
     await checkoutPage.actions.continueToSummary();
 
     expect(round2(await checkoutPage.actions.getSubtotal())).toBe(adjustedSubtotal);

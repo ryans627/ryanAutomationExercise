@@ -1,13 +1,12 @@
 import { expect } from "@wdio/globals";
 import { ACCOUNTS, HOST, MESSAGES, PASSWORD, PATHS } from "../../constants/constants";
-import { CATALOG } from "../../constants/testData";
+import { CATALOG, SHIPPING_INFO } from "../../constants/testData";
 import galleryPage from "../../pages/galleryPage";
 import cartPage from "../../pages/cartPage";
 import checkoutPage from "../../pages/checkoutPage";
 import loginPage from "../../pages/loginPage";
 
 const hoodie = CATALOG[0];
-const shippingInfo = { firstName: "Ada", lastName: "Lovelace", postalCode: "94016" };
 
 const VIEWPORTS = {
   phone: { width: 375, height: 812 },
@@ -55,7 +54,7 @@ const runResponsiveFlow = async (width: number, height: number) => {
   await expect(browser).toHaveUrl(`${HOST}${PATHS.checkout}`);
   await assertNoHorizontalScroll();
 
-  await checkoutPage.actions.fillShippingInfo(shippingInfo);
+  await checkoutPage.actions.fillShippingInfo(SHIPPING_INFO);
   await checkoutPage.actions.continueToSummary();
   await expect(checkoutPage.elements.finishButton()).toBeDisplayed();
   await assertNoHorizontalScroll();

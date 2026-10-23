@@ -5,7 +5,7 @@ import galleryPage from "../../pages/galleryPage";
 import cartPage from "../../pages/cartPage";
 import productPage from "../../pages/productPage";
 import { loginAs } from "../../utils/auth";
-import { round2 } from "../../utils/helpers";
+import { computeTotals, round2 } from "../../utils/helpers";
 
 const hoodie = CATALOG[0]; // After Hours Hoodie — not affected by BUG-001.
 
@@ -30,8 +30,7 @@ describe("Shopping cart — regression", () => {
     await galleryPage.actions.goToCart();
     const subtotal = round2(hoodie.price * qty);
     const taxRate = await cartPage.actions.getTaxRate();
-    const tax = round2(subtotal * taxRate);
-    const total = round2(subtotal + tax);
+    const { tax, total } = computeTotals(subtotal, taxRate);
     expect(round2(await cartPage.actions.getSubtotal())).toBe(subtotal);
     expect(round2(await cartPage.actions.getTax())).toBe(tax);
     expect(round2(await cartPage.actions.getTotal())).toBe(total);

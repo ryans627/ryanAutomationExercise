@@ -41,7 +41,9 @@ class GalleryPage extends Page {
     addToCart: async (slug: string, qty = 1) => {
       for (let i = 0; i < qty; i++) {
         await this.elements.addToCartButton(slug).click();
-        if (i < qty - 1) await browser.pause(400);
+        // The button briefly flips to an "Added!" state; wait for it to reset
+        // before the next click instead of using a fixed pause.
+        if (i < qty - 1) await this.elements.addToCartButton(slug).waitForClickable({ timeout: 5000 });
       }
     },
     // Navigate to a product's detail page via the in-app name link (a direct

@@ -18,3 +18,10 @@ export const CATALOG = [
   { name: "Summit Fleece", slug: "fleece-jacket", category: "Apparel", price: 49.99 },
   { name: "Trailmark Day Pack", slug: "backpack", category: "Gear", price: 29.99 },
 ] as const;
+
+/** Default shipping information used across checkout and mobile specs. */
+export const SHIPPING_INFO = {
+  firstName: "Ada",
+  lastName: "Lovelace",
+  postalCode: "94016",
+} as const;

@@ -23,6 +23,12 @@ export function round2(n: number): number {
   return Math.round(n * 100) / 100;
 }
 
+/** Compute tax and total from a subtotal and tax rate, rounding each to cents. */
+export function computeTotals(subtotal: number, taxRate: number): { tax: number; total: number } {
+  const tax = round2(subtotal * taxRate);
+  return { tax, total: round2(subtotal + tax) };
+}
+
 /** Parse a percentage string like "Tax (8%)" into a rate like 0.08. */
 export function parsePercentage(text: string): number {
   const match = text.match(/(\d+(?:\.\d+)?)%/);

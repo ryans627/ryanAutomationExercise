@@ -19,7 +19,9 @@ class ProductPage extends Page {
     addToCart: async (slug: string, times = 1) => {
       for (let i = 0; i < times; i++) {
         await this.elements.addToCartButton(slug).click();
-        if (i < times - 1) await browser.pause(300);
+        // Wait for the button to reset from its transient "Added!" state before
+        // clicking again instead of using a fixed pause.
+        if (i < times - 1) await this.elements.addToCartButton(slug).waitForClickable({ timeout: 5000 });
       }
     },
     increaseQuantity: async (slug: string) => {
