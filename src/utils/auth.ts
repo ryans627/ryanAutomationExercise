@@ -1,9 +1,9 @@
-import { ACCOUNTS, PASSWORD } from "../constants/constants";
+import { PASSWORD } from "../constants/constants";
 import loginPage from "../pages/loginPage";
 
-/** Log in as the Shopper account and wait for the session to be ready. */
-export async function loginAsShopper(): Promise<void> {
+/** Log in as the given account and wait for the session to be ready. */
+export async function loginAs(username: string): Promise<void> {
   await loginPage.navigate();
-  await loginPage.actions.login({ username: ACCOUNTS.shopper, password: PASSWORD });
+  await loginPage.actions.login({ username, password: PASSWORD });
   await loginPage.elements.logoutButton().waitForDisplayed();
 }

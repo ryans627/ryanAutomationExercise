@@ -15,6 +15,7 @@ class CartPage extends Page {
     total: () => getByDataTest(DATATEST.cartTotal),
     emptyTitle: () => getByDataTest(DATATEST.cartEmptyTitle),
     emptyMessage: () => getByDataTest(DATATEST.cartEmptyMessage),
+    emptyStateContinueButton: () => getByDataTest(DATATEST.continueShopping),
     qtyDecreaseButton: (id: string) => getByDataTest(`decrease-qty-item-${id}`),
     qtyIncreaseButton: (id: string) => getByDataTest(`increase-qty-item-${id}`),
     qtyValue: (id: string) => getByDataTest(`quantity-item-${id}`),
@@ -51,6 +52,9 @@ class CartPage extends Page {
     continueShopping: async () => {
       await this.elements.continueShoppingButton().click();
     },
+    continueShoppingFromEmpty: async () => {
+      await this.elements.emptyStateContinueButton().click();
+    },
     getSubtotal: async () => parseCurrency(await this.elements.subtotal().getText()),
     getTax: async () => parseCurrency(await this.elements.tax().getText()),
     getTotal: async () => parseCurrency(await this.elements.total().getText()),
@@ -61,6 +65,13 @@ class CartPage extends Page {
         return 0;
       }
       return Number(await badge.getText());
+    },
+    // Sum of every line item's quantity on the cart page.
+    getTotalUnits: async () => {
+      return browser.execute(() =>
+        Array.from(document.querySelectorAll('[data-test^="quantity-item-"]'))
+          .reduce((sum, el) => sum + Number(el.textContent?.trim() || 0), 0)
+      );
     },
   };
 }

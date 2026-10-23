@@ -1,10 +1,10 @@
 import { expect } from "@wdio/globals";
-import { HOST, MESSAGES, PATHS } from "../../constants/constants";
+import { HOST, MESSAGES, PATHS, ACCOUNTS } from "../../constants/constants";
 import { CATALOG } from "../../constants/testData";
 import galleryPage from "../../pages/galleryPage";
 import cartPage from "../../pages/cartPage";
 import checkoutPage from "../../pages/checkoutPage";
-import { loginAsShopper } from "../../utils/auth";
+import { loginAs } from "../../utils/auth";
 import { round2 } from "../../utils/helpers";
 
 const hoodie = CATALOG[0]; // After Hours Hoodie
@@ -12,7 +12,7 @@ const shippingInfo = { firstName: "Ada", lastName: "Lovelace", postalCode: "9401
 
 describe("Checkout — sanity", () => {
   beforeEach(async () => {
-    await loginAsShopper();
+    await loginAs(ACCOUNTS.shopper);
   });
 
   it("TC-CHECKOUT-01: Checkout should complete through to order confirmation and clear the cart", async () => {
@@ -57,15 +57,14 @@ describe("Checkout — sanity", () => {
     // Adjust quantity: increase the hoodie to 2, then verify totals recalculate.
     const hoodieId = await cartPage.actions.getCartItemId(hoodie.name);
     await cartPage.actions.increaseQuantity(hoodieId);
-    await browser.pause(400);
 
     const adjustedSubtotal = round2(2 * hoodie.price + bottom.price);
     const adjustedTax = round2(adjustedSubtotal * taxRate);
     const adjustedTotal = round2(adjustedSubtotal + adjustedTax);
 
-    expect(round2(await cartPage.actions.getSubtotal())).toBe(adjustedSubtotal);
-    expect(round2(await cartPage.actions.getTax())).toBe(adjustedTax);
-    expect(round2(await cartPage.actions.getTotal())).toBe(adjustedTotal);
+    await expect(cartPage.elements.subtotal()).toHaveText(`$${adjustedSubtotal.toFixed(2)}`);
+    await expect(cartPage.elements.tax()).toHaveText(`$${adjustedTax.toFixed(2)}`);
+    await expect(cartPage.elements.total()).toHaveText(`$${adjustedTotal.toFixed(2)}`);
 
     await cartPage.actions.proceedToCheckout();
     await checkoutPage.actions.fillShippingInfo(shippingInfo);

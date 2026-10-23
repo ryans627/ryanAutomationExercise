@@ -8,6 +8,7 @@ class ProductPage extends Page {
 
   readonly elements = {
     backToProductsButton: () => getByDataTest(DATATEST.backToInventoryLink),
+    imageContainer: () => getByDataTest(DATATEST.productImageContainer),
     addToCartButton: (slug: string) => getByDataTest(`add-to-cart-${slug}`),
     qtyDecreaseButton: (slug: string) => getByDataTest(`qty-decrease-${slug}`),
     qtyIncreaseButton: (slug: string) => getByDataTest(`qty-increase-${slug}`),
@@ -15,8 +16,11 @@ class ProductPage extends Page {
   };
 
   readonly actions = {
-    addToCart: async (slug: string) => {
-      await this.elements.addToCartButton(slug).click();
+    addToCart: async (slug: string, times = 1) => {
+      for (let i = 0; i < times; i++) {
+        await this.elements.addToCartButton(slug).click();
+        if (i < times - 1) await browser.pause(300);
+      }
     },
     increaseQuantity: async (slug: string) => {
       await this.elements.qtyIncreaseButton(slug).click();
@@ -26,6 +30,16 @@ class ProductPage extends Page {
     },
     getQuantity: async (slug: string) => {
       return Number(await this.elements.qtyValue(slug).getText());
+    },
+    setQuantity: async (slug: string, qty: number) => {
+      const delta = qty - (await this.actions.getQuantity(slug));
+      for (let i = 0; i < Math.abs(delta); i++) {
+        if (delta > 0) {
+          await this.actions.increaseQuantity(slug);
+        } else {
+          await this.actions.decreaseQuantity(slug);
+        }
+      }
     },
     backToProducts: async () => {
       await this.elements.backToProductsButton().click();

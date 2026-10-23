@@ -1,10 +1,10 @@
 import { expect } from "@wdio/globals";
-import { HOST, MESSAGES, PATHS } from "../../constants/constants";
+import { HOST, MESSAGES, PATHS, ACCOUNTS } from "../../constants/constants";
 import { CATALOG } from "../../constants/testData";
 import galleryPage from "../../pages/galleryPage";
 import cartPage from "../../pages/cartPage";
 import checkoutPage from "../../pages/checkoutPage";
-import { loginAsShopper } from "../../utils/auth";
+import { loginAs } from "../../utils/auth";
 import { round2 } from "../../utils/helpers";
 
 const hoodie = CATALOG[0]; // After Hours Hoodie
@@ -12,7 +12,7 @@ const shippingInfo = { firstName: "Ada", lastName: "Lovelace", postalCode: "9401
 
 describe("Checkout — regression", () => {
   beforeEach(async () => {
-    await loginAsShopper();
+    await loginAs(ACCOUNTS.shopper);
   });
 
   it("TC-CHECKOUT-02: Submitting empty required fields should show field-specific validation errors", async () => {
@@ -30,6 +30,7 @@ describe("Checkout — regression", () => {
     await expect(checkoutPage.elements.lastNameError()).toHaveText(MESSAGES.lastNameRequired);
     await expect(checkoutPage.elements.postalCodeError()).toHaveText(MESSAGES.postalCodeRequired);
     // BUG-004: First Name shows "Last Name is required" instead of "First Name is required".
+    // await expect(checkoutPage.elements.firstNameError()).toHaveText(MESSAGES.firstNameRequired);
   });
 
   it("TC-CHECKOUT-03: Checkout totals should match the expected subtotal, tax, and total", async () => {

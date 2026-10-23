@@ -296,7 +296,7 @@ Expected monetary results are expressed as formulas rather than fixed numbers, e
 - **testcase_id:** `TC-PDP-03`
 - **testcase_title:** Repeatedly clicking Add to Cart should keep adding items or show a clear dismissible error
 - **test_level:** regression
-- **automated:** no
+- **automated:** yes
 - **precondition:** Logged in as the Shopper account, on a product detail page.
 - **test_steps:**
   1. Click **Add to Cart** 7 times for the same product.
@@ -313,11 +313,12 @@ Expected monetary results are expressed as formulas rather than fixed numbers, e
 - **testcase_id:** `TC-CART-01`
 - **testcase_title:** Clicking Add to Cart should add the item and increment the cart badge
 - **test_level:** sanity
-- **automated:** no
+- **automated:** yes
 - **precondition:** Logged in as the Shopper account.
 - **test_steps:**
   1. On the home page, click **Add to Cart** on a product card.
-- **expect_result:** The button briefly shows "Added!", the cart badge increments, and the item appears in the cart.
+  2. Click the cart icon to open the cart.
+- **expect_result:** The item appears in the cart, and the cart icon badge equals the total units in the cart.
 - **priority:** High
 - **notes:** ⚠️ Fails for one catalog product (identified in BUG-001); the rest work.
 
@@ -326,7 +327,7 @@ Expected monetary results are expressed as formulas rather than fixed numbers, e
 - **testcase_id:** `TC-CART-02`
 - **testcase_title:** Cart should correctly reflect totals, quantity changes, and item removal
 - **test_level:** regression
-- **automated:** no
+- **automated:** yes
 - **precondition:** Logged in as the Shopper account, with items in the cart.
 - **test_steps:**
   1. Open a product detail page, set a quantity, and click **Add to Cart**; verify the badge increments by that quantity.
@@ -415,7 +416,7 @@ Expected monetary results are expressed as formulas rather than fixed numbers, e
 - **testcase_id:** `TC-ACCOUNT-01`
 - **testcase_title:** Image-variation account should show product images that match their labels
 - **test_level:** regression
-- **automated:** no
+- **automated:** yes
 - **precondition:** Logged in as the Image-variation account.
 - **test_steps:**
   1. Browse the catalog and inspect each product's image/label.
@@ -428,7 +429,7 @@ Expected monetary results are expressed as formulas rather than fixed numbers, e
 - **testcase_id:** `TC-ACCOUNT-02`
 - **testcase_title:** Cart-badge account should show an accurate cart badge count
 - **test_level:** regression
-- **automated:** no
+- **automated:** yes
 - **precondition:** Logged in as the Cart-badge account.
 - **test_steps:**
   1. Add and remove items, observing the cart badge after each change.

@@ -44,6 +44,18 @@ class GalleryPage extends Page {
         if (i < qty - 1) await browser.pause(400);
       }
     },
+    // Navigate to a product's detail page via the in-app name link (a direct
+    // browser.url() load would drop the session — BUG-006).
+    openProduct: async (slug: string) => {
+      const links = await this.elements.productNameLinks();
+      for (const link of links) {
+        if ((await link.getAttribute("href"))?.endsWith(`/product/${slug}`)) {
+          await link.click();
+          return;
+        }
+      }
+      throw new Error(`No product name link found for slug: ${slug}`);
+    },
     goToCart: async () => {
       await this.elements.navCart().click();
     },

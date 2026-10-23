@@ -1,7 +1,8 @@
 import { expect } from "@wdio/globals";
+import { ACCOUNTS } from "../../constants/constants";
 import { CATALOG } from "../../constants/testData";
 import galleryPage from "../../pages/galleryPage";
-import { loginAsShopper } from "../../utils/auth";
+import { loginAs } from "../../utils/auth";
 
 describe("Product gallery — regression", () => {
   const hoodie = CATALOG.find((p) => p.name.toLowerCase().includes("hoodie"))!.name;
@@ -11,7 +12,7 @@ describe("Product gallery — regression", () => {
     .sort();
 
   beforeEach(async () => {
-    await loginAsShopper();
+    await loginAs(ACCOUNTS.shopper);
   });
 
   it("TC-GALLERY-05: Search combined with a category filter should return only matching products", async () => {
