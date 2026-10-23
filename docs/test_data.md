@@ -55,6 +55,7 @@ Reference data for the test cases in [`testcases.md`](testcases.md). Automation 
 | Nav → Cart | `[data-test="nav-cart"]` |
 | Cart badge count | `[data-test="cart-badge"]` |
 | Logout | `[data-test="logout-button"]` |
+| Logged-in username | `[data-test="logged-in-user"]` |
 | Search box | `[data-test="search-products"]` |
 | Clear filters | `[data-test="clear-filters"]` |
 | Category filter | `[data-test="filter-category"]` |

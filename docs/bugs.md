@@ -11,7 +11,7 @@ Bugs discovered during QA. Test cases reference these by `BUG-xxx`. Environment:
 | Severity | High |
 | Priority | High |
 | Status | Open |
-| Affected test case | TC-CART-SANITY-01, TC-CART-E2E-01 |
+| Affected test case | TC-CART-01, TC-CART-02 |
 | Screenshot | [bolt-tshirt-add-broken.png](screenshots/bolt-tshirt-add-broken.png) |
 
 **Steps to reproduce:**
@@ -34,7 +34,7 @@ Bugs discovered during QA. Test cases reference these by `BUG-xxx`. Environment:
 | Severity | Medium |
 | Priority | Medium |
 | Status | Open |
-| Affected test case | TC-GALLERY-SANITY-04 |
+| Affected test case | TC-GALLERY-04 |
 | Screenshot | [sort-high-to-low-bug.png](screenshots/sort-high-to-low-bug.png) |
 
 **Steps to reproduce:**
@@ -56,7 +56,7 @@ Bugs discovered during QA. Test cases reference these by `BUG-xxx`. Environment:
 | Severity | Medium |
 | Priority | Medium |
 | Status | Open |
-| Affected test case | TC-ACCOUNT-E2E-02 |
+| Affected test case | TC-ACCOUNT-02 |
 | Screenshot | [cart-badge-bug.png](screenshots/cart-badge-bug.png) |
 
 **Steps to reproduce:**
@@ -78,7 +78,7 @@ Bugs discovered during QA. Test cases reference these by `BUG-xxx`. Environment:
 | Severity | Low |
 | Priority | Low |
 | Status | Open |
-| Affected test case | TC-CHECKOUT-E2E-01 |
+| Affected test case | TC-CHECKOUT-02 |
 | Screenshot | [checkout-empty-error.png](screenshots/checkout-empty-error.png) |
 
 **Steps to reproduce:**
@@ -100,7 +100,7 @@ Bugs discovered during QA. Test cases reference these by `BUG-xxx`. Environment:
 | Severity | Medium |
 | Priority | Medium |
 | Status | Open |
-| Affected test case | TC-ACCOUNT-E2E-01 |
+| Affected test case | TC-ACCOUNT-01 |
 | Screenshot | [image-variation-home.png](screenshots/image-variation-home.png), [socks-detail-lens-warp.png](screenshots/socks-detail-lens-warp.png) |
 
 **Steps to reproduce:**
@@ -122,7 +122,7 @@ Bugs discovered during QA. Test cases reference these by `BUG-xxx`. Environment:
 | Severity | High |
 | Priority | High |
 | Status | Open |
-| Affected test case | TC-AUTH-E2E-03 |
+| Affected test case | TC-AUTH-05 |
 | Screenshot | [login-page.png](screenshots/login-page.png) |
 
 **Steps to reproduce:**
@@ -144,7 +144,7 @@ Bugs discovered during QA. Test cases reference these by `BUG-xxx`. Environment:
 | Severity | Medium |
 | Priority | Medium |
 | Status | Open |
-| Affected test case | TC-PDP-E2E-02 |
+| Affected test case | TC-PDP-03 |
 | Screenshot | [overload-error-banner.png](screenshots/overload-error-banner.png) |
 
 **Steps to reproduce:**
@@ -157,3 +157,26 @@ Bugs discovered during QA. Test cases reference these by `BUG-xxx`. Environment:
 **Actual result:** The 7th click triggers a "System overload" error banner — *"Error: System overload — item interaction limit exceeded for this session. Please refresh the page to continue."* — that blocks all further clicks until dismissed.
 
 **Notes:** The banner is a full-width fixed overlay with a dismiss (×) button. Confirm whether the interaction limit resets after dismissing the banner vs. requiring a full reload.
+
+---
+
+### BUG-008 — Login required-field error text is wrong for Password
+
+| Field | Detail |
+| --- | --- |
+| Severity | Low |
+| Priority | Low |
+| Status | Open |
+| Affected test case | TC-AUTH-03 |
+| Screenshot | [login-password-empty-error.png](screenshots/login-password-empty-error.png) |
+
+**Steps to reproduce:**
+1. Navigate to `/login`.
+2. Fill the **Username** field with a valid username (e.g. `fern_signal`) and leave **Password** empty.
+3. Click **Login**.
+
+**Expected result:** The error reads "Password is required".
+
+**Actual result:** The error reads "Username is required".
+
+**Notes:** Same copy-paste field-name bug as BUG-004. The both-empty case correctly shows "Username is required"; only the password-empty case is wrong.

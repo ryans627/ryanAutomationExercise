@@ -25,7 +25,7 @@ Expected monetary results are expressed as formulas rather than fixed numbers, e
 
 | Field | Meaning |
 | --- | --- |
-| `testcase_id` | `TC-{MODULE}-{LEVEL}-{NN}`, e.g. `TC-CART-SANITY-01`, `TC-GALLERY-E2E-04`. |
+| `testcase_id` | `TC-{MODULE}-{NN}`, e.g. `TC-CART-01`, `TC-GALLERY-08`. |
 | `testcase_title` | Short human-readable description. |
 | `precondition` | State that must exist before running the test. |
 | `test_steps` | Numbered actions to perform. |
@@ -39,7 +39,7 @@ Expected monetary results are expressed as formulas rather than fixed numbers, e
 | Level | Meaning |
 | --- | --- |
 | `SANITY` | Smoke test — a core workflow / happy path. If it fails, something is seriously broken. Run first. |
-| `E2E` | The regression set — edge cases, negative cases, and more detailed/combination workflows. |
+| `REGRESSION` | The regression set — edge cases, negative cases, and more detailed/combination workflows. |
 
 ---
 
@@ -47,10 +47,10 @@ Expected monetary results are expressed as formulas rather than fixed numbers, e
 
 ### 1. Authentication
 
-#### TC-AUTH-SANITY-01 — Login with valid credentials
+#### TC-AUTH-01 — User with valid credentials should be able to log in successfully
 
-- **testcase_id:** `TC-AUTH-SANITY-01`
-- **testcase_title:** Login with valid credentials
+- **testcase_id:** `TC-AUTH-01`
+- **testcase_title:** User with valid credentials should be able to log in successfully
 - **precondition:** None
 - **test_steps:**
   1. Navigate to the app root (redirects to `/login`).
@@ -60,10 +60,10 @@ Expected monetary results are expressed as formulas rather than fixed numbers, e
 - **priority:** High
 - **notes:** —
 
-#### TC-AUTH-SANITY-02 — Logout returns to login
+#### TC-AUTH-02 — User should be logged out and redirected to the login page when clicking logout
 
-- **testcase_id:** `TC-AUTH-SANITY-02`
-- **testcase_title:** Logout returns to login
+- **testcase_id:** `TC-AUTH-02`
+- **testcase_title:** User should be logged out and redirected to the login page when clicking logout
 - **precondition:** Logged in (any account).
 - **test_steps:**
   1. Click **Log out**.
@@ -73,10 +73,10 @@ Expected monetary results are expressed as formulas rather than fixed numbers, e
 
 ### 2. Gallery (Product Listing)
 
-#### TC-GALLERY-SANITY-01 — Catalog loads with all items
+#### TC-GALLERY-01 — Catalog should display all items with name, price, review count, and description
 
-- **testcase_id:** `TC-GALLERY-SANITY-01`
-- **testcase_title:** Catalog loads with all items
+- **testcase_id:** `TC-GALLERY-01`
+- **testcase_title:** Catalog should display all items with name, price, review count, and description
 - **precondition:** Logged in as the Shopper account.
 - **test_steps:**
   1. Navigate to `/`.
@@ -84,10 +84,10 @@ Expected monetary results are expressed as formulas rather than fixed numbers, e
 - **priority:** High
 - **notes:** —
 
-#### TC-GALLERY-SANITY-02 — Search (lowercase, uppercase, partial name, category name)
+#### TC-GALLERY-02 — Search should match products case-insensitively by full name, partial name, and category name
 
-- **testcase_id:** `TC-GALLERY-SANITY-02`
-- **testcase_title:** Search (lowercase, uppercase, partial name, category name)
+- **testcase_id:** `TC-GALLERY-02`
+- **testcase_title:** Search should match products case-insensitively by full name, partial name, and category name
 - **precondition:** Logged in as the Shopper account.
 - **test_steps:**
   1. Search the **lowercase** term from the Search terms table in `test_data.md`; verify only the expected match is listed.
@@ -98,10 +98,10 @@ Expected monetary results are expressed as formulas rather than fixed numbers, e
 - **priority:** High
 - **notes:** —
 
-#### TC-GALLERY-SANITY-03 — Filter by all categories
+#### TC-GALLERY-03 — Catalog should filter to show only the selected category's products
 
-- **testcase_id:** `TC-GALLERY-SANITY-03`
-- **testcase_title:** Filter by all categories
+- **testcase_id:** `TC-GALLERY-03`
+- **testcase_title:** Catalog should filter to show only the selected category's products
 - **precondition:** Logged in as the Shopper account.
 - **test_steps:**
   1. Select each category in the filter in turn: "All categories", "Apparel", "Accessories", "Gear", and "Books".
@@ -110,10 +110,10 @@ Expected monetary results are expressed as formulas rather than fixed numbers, e
 - **priority:** High
 - **notes:** —
 
-#### TC-GALLERY-SANITY-04 — Sort by all options (name A→Z / Z→A, price low→high / high→low)
+#### TC-GALLERY-04 — Catalog should sort by name and price in both ascending and descending order
 
-- **testcase_id:** `TC-GALLERY-SANITY-04`
-- **testcase_title:** Sort by all options (name A→Z / Z→A, price low→high / high→low)
+- **testcase_id:** `TC-GALLERY-04`
+- **testcase_title:** Catalog should sort by name and price in both ascending and descending order
 - **precondition:** Logged in as the Shopper account.
 - **test_steps:**
   1. Select "Name: A to Z" (`name-az`); verify products are ordered alphabetically ascending.
@@ -127,10 +127,10 @@ Expected monetary results are expressed as formulas rather than fixed numbers, e
 
 ### 3. Product Detail Page
 
-#### TC-PDP-SANITY-01 — Open product detail
+#### TC-PDP-01 — Clicking a product should open its detail page with full product information
 
-- **testcase_id:** `TC-PDP-SANITY-01`
-- **testcase_title:** Open product detail
+- **testcase_id:** `TC-PDP-01`
+- **testcase_title:** Clicking a product should open its detail page with full product information
 - **precondition:** Logged in as the Shopper account.
 - **test_steps:**
   1. Click a product name/image link.
@@ -140,10 +140,10 @@ Expected monetary results are expressed as formulas rather than fixed numbers, e
 
 ### 4. Cart
 
-#### TC-CART-SANITY-01 — Add to Cart
+#### TC-CART-01 — Clicking Add to Cart should add the item and increment the cart badge
 
-- **testcase_id:** `TC-CART-SANITY-01`
-- **testcase_title:** Add to Cart
+- **testcase_id:** `TC-CART-01`
+- **testcase_title:** Clicking Add to Cart should add the item and increment the cart badge
 - **precondition:** Logged in as the Shopper account.
 - **test_steps:**
   1. On the home page, click **Add to Cart** on a product card.
@@ -153,10 +153,10 @@ Expected monetary results are expressed as formulas rather than fixed numbers, e
 
 ### 5. Checkout
 
-#### TC-CHECKOUT-SANITY-01 — Happy path checkout
+#### TC-CHECKOUT-01 — Checkout should complete through to order confirmation and clear the cart
 
-- **testcase_id:** `TC-CHECKOUT-SANITY-01`
-- **testcase_title:** Happy path checkout
+- **testcase_id:** `TC-CHECKOUT-01`
+- **testcase_title:** Checkout should complete through to order confirmation and clear the cart
 - **precondition:** Logged in as the Shopper account, with items in the cart.
 - **test_steps:**
   1. From the cart, click **Proceed to Checkout**; verify navigation to `/checkout`.
@@ -169,10 +169,10 @@ Expected monetary results are expressed as formulas rather than fixed numbers, e
 
 ### 6. Full Journey
 
-#### TC-JOURNEY-SANITY-01 — Full happy path (login → browse → add → cart → checkout → confirm)
+#### TC-JOURNEY-01 — The full happy path from login to order confirmation should complete with consistent totals and state
 
-- **testcase_id:** `TC-JOURNEY-SANITY-01`
-- **testcase_title:** Full happy path (login → browse → add → cart → checkout → confirm)
+- **testcase_id:** `TC-JOURNEY-01`
+- **testcase_title:** The full happy path from login to order confirmation should complete with consistent totals and state
 - **precondition:** None (fresh browser session, empty cart).
 - **test_steps:**
   1. Log in as the Shopper account.
@@ -191,14 +191,14 @@ Expected monetary results are expressed as formulas rather than fixed numbers, e
 
 ---
 
-## Part 2 — E2E Tests (`@e2e`)
+## Part 2 — Regression Tests (`@regression`)
 
 ### 1. Authentication
 
-#### TC-AUTH-E2E-01 — Invalid login attempts are rejected
+#### TC-AUTH-03 — User should see an error and stay on the login page when submitting invalid credentials
 
-- **testcase_id:** `TC-AUTH-E2E-01`
-- **testcase_title:** Invalid login attempts are rejected
+- **testcase_id:** `TC-AUTH-03`
+- **testcase_title:** User should see an error and stay on the login page when submitting invalid credentials
 - **precondition:** None
 - **test_steps:**
   1. Enter the Shopper username with a wrong password and click **Login**; verify an error is shown and you stay on `/login`.
@@ -206,24 +206,24 @@ Expected monetary results are expressed as formulas rather than fixed numbers, e
   3. Enter the Locked account credentials and click **Login**; verify the locked-out error.
 - **expect_result:** All three invalid attempts are rejected with appropriate feedback; the user stays on `/login` (the Locked account shows "Sorry, this user has been locked out.").
 - **priority:** Medium
-- **notes:** —
+- **notes:** ⚠️ When only Password is empty, the error shows "Username is required" instead of "Password is required" — see BUG-008.
 
-#### TC-AUTH-E2E-02 — Login form UI: password visibility and practice-account buttons
+#### TC-AUTH-04 — User should be able to auto-fill via practice-account buttons, log in, and log out
 
-- **testcase_id:** `TC-AUTH-E2E-02`
-- **testcase_title:** Login form UI: password visibility and practice-account buttons
+- **testcase_id:** `TC-AUTH-04`
+- **testcase_title:** User should be able to auto-fill via practice-account buttons, log in, and log out
 - **precondition:** None
 - **test_steps:**
-  1. Type a password, click the toggle-password-visibility button, then click it again.
-  2. Click each practice-account button (one per account in `test_data.md`) and verify the fields are populated.
-- **expect_result:** The password field toggles between masked (`type=password`) and visible (`type=text`); each practice-account button fills **both** the username and password fields with that account's credentials.
+  1. Click each practice-account button (one per account in `test_data.md`) and verify the fields are populated.
+  2. For each login-able account (all except the Locked account), click its practice-account button, click **Login**, verify the user is logged in with that account's username shown in `[data-test="logged-in-user"]`, then click **Log out**.
+- **expect_result:** Each practice-account button fills **both** the username and password fields; each login-able account logs in (redirect to home, `[data-test="logged-in-user"]` shows the correct username) and logs out (redirect back to `/login`).
 - **priority:** Low
-- **notes:** —
+- **notes:** The Locked account is excluded from the login step — it auto-fills correctly but is expected to stay locked out (see TC-AUTH-03).
 
-#### TC-AUTH-E2E-03 — Session persists across a page reload
+#### TC-AUTH-05 — User session should persist across a page reload
 
-- **testcase_id:** `TC-AUTH-E2E-03`
-- **testcase_title:** Session persists across a page reload
+- **testcase_id:** `TC-AUTH-05`
+- **testcase_title:** User session should persist across a page reload
 - **precondition:** Logged in as the Shopper account.
 - **test_steps:**
   1. Reload the page (or navigate directly to a URL such as `/cart`).
@@ -231,12 +231,23 @@ Expected monetary results are expressed as formulas rather than fixed numbers, e
 - **priority:** Medium
 - **notes:** ⚠️ Currently FAILS — see BUG-006.
 
+#### TC-AUTH-06 — User should be able to toggle password visibility
+
+- **testcase_id:** `TC-AUTH-06`
+- **testcase_title:** User should be able to toggle password visibility
+- **precondition:** None
+- **test_steps:**
+  1. Type a password, click the toggle-password-visibility button, then click it again.
+- **expect_result:** The password field toggles between masked (`type=password`) and visible (`type=text`).
+- **priority:** Low
+- **notes:** —
+
 ### 2. Gallery
 
-#### TC-GALLERY-E2E-01 — Search + filter
+#### TC-GALLERY-05 — Search combined with a category filter should return only matching products
 
-- **testcase_id:** `TC-GALLERY-E2E-01`
-- **testcase_title:** Search + filter
+- **testcase_id:** `TC-GALLERY-05`
+- **testcase_title:** Search combined with a category filter should return only matching products
 - **precondition:** Logged in as the Shopper account.
 - **test_steps:**
   1. Enter a search term and select a category.
@@ -244,10 +255,10 @@ Expected monetary results are expressed as formulas rather than fixed numbers, e
 - **priority:** Medium
 - **notes:** —
 
-#### TC-GALLERY-E2E-02 — Search + sort
+#### TC-GALLERY-06 — Search combined with a sort option should return matching products in order
 
-- **testcase_id:** `TC-GALLERY-E2E-02`
-- **testcase_title:** Search + sort
+- **testcase_id:** `TC-GALLERY-06`
+- **testcase_title:** Search combined with a sort option should return matching products in order
 - **precondition:** Logged in as the Shopper account.
 - **test_steps:**
   1. Enter a search term and select a sort option.
@@ -255,10 +266,10 @@ Expected monetary results are expressed as formulas rather than fixed numbers, e
 - **priority:** Medium
 - **notes:** —
 
-#### TC-GALLERY-E2E-03 — Filter + sort
+#### TC-GALLERY-07 — Category filter combined with a sort option should return the category's products in order
 
-- **testcase_id:** `TC-GALLERY-E2E-03`
-- **testcase_title:** Filter + sort
+- **testcase_id:** `TC-GALLERY-07`
+- **testcase_title:** Category filter combined with a sort option should return the category's products in order
 - **precondition:** Logged in as the Shopper account.
 - **test_steps:**
   1. Select a category and a sort option.
@@ -266,10 +277,10 @@ Expected monetary results are expressed as formulas rather than fixed numbers, e
 - **priority:** Medium
 - **notes:** —
 
-#### TC-GALLERY-E2E-04 — Search + filter + sort
+#### TC-GALLERY-08 — Search, category, and sort combined should return only matching products in order
 
-- **testcase_id:** `TC-GALLERY-E2E-04`
-- **testcase_title:** Search + filter + sort
+- **testcase_id:** `TC-GALLERY-08`
+- **testcase_title:** Search combined with a category filter should return only matching products + sort
 - **precondition:** Logged in as the Shopper account.
 - **test_steps:**
   1. Enter a search term, select a category, and select a sort option.
@@ -277,10 +288,10 @@ Expected monetary results are expressed as formulas rather than fixed numbers, e
 - **priority:** Medium
 - **notes:** —
 
-#### TC-GALLERY-E2E-05 — Search with no results and clear filters
+#### TC-GALLERY-09 — Search with no matches should show an empty state that Clear filters restores
 
-- **testcase_id:** `TC-GALLERY-E2E-05`
-- **testcase_title:** Search with no results and clear filters
+- **testcase_id:** `TC-GALLERY-09`
+- **testcase_title:** Search with no matches should show an empty state that Clear filters restores
 - **precondition:** Logged in as the Shopper account.
 - **test_steps:**
   1. Type `no_result_term` from `test_data.md`; verify "0 items to explore" and an empty-state message with a **Clear filters** button.
@@ -291,10 +302,10 @@ Expected monetary results are expressed as formulas rather than fixed numbers, e
 
 ### 3. Product Detail Page
 
-#### TC-PDP-E2E-01 — Quantity controls and Back to products
+#### TC-PDP-02 — Quantity controls should increment and decrement with a minimum, and Back to products should return to the catalog
 
-- **testcase_id:** `TC-PDP-E2E-01`
-- **testcase_title:** Quantity controls and Back to products
+- **testcase_id:** `TC-PDP-02`
+- **testcase_title:** Quantity controls should increment and decrement with a minimum, and Back to products should return to the catalog
 - **precondition:** Logged in as the Shopper account, on a product detail page.
 - **test_steps:**
   1. Click "+" then "−"; verify the quantity increments/decrements with a minimum of `qty_min`.
@@ -303,10 +314,10 @@ Expected monetary results are expressed as formulas rather than fixed numbers, e
 - **priority:** Medium
 - **notes:** —
 
-#### TC-PDP-E2E-02 — Repeated Add to Cart (interaction limit)
+#### TC-PDP-03 — Repeatedly clicking Add to Cart should keep adding items or show a clear dismissible error
 
-- **testcase_id:** `TC-PDP-E2E-02`
-- **testcase_title:** Repeated Add to Cart (interaction limit)
+- **testcase_id:** `TC-PDP-03`
+- **testcase_title:** Repeatedly clicking Add to Cart should keep adding items or show a clear dismissible error
 - **precondition:** Logged in as the Shopper account, on a product detail page.
 - **test_steps:**
   1. Click **Add to Cart** 7 times for the same product.
@@ -316,10 +327,10 @@ Expected monetary results are expressed as formulas rather than fixed numbers, e
 
 ### 4. Cart
 
-#### TC-CART-E2E-01 — Cart totals, quantity changes, and removal
+#### TC-CART-02 — Cart should correctly reflect totals, quantity changes, and item removal
 
-- **testcase_id:** `TC-CART-E2E-01`
-- **testcase_title:** Cart totals, quantity changes, and removal
+- **testcase_id:** `TC-CART-02`
+- **testcase_title:** Cart should correctly reflect totals, quantity changes, and item removal
 - **precondition:** Logged in as the Shopper account, with items in the cart.
 - **test_steps:**
   1. Open a product detail page, set a quantity, and click **Add to Cart**; verify the badge increments by that quantity.
@@ -333,10 +344,10 @@ Expected monetary results are expressed as formulas rather than fixed numbers, e
 
 ### 5. Checkout
 
-#### TC-CHECKOUT-E2E-01 — Required-field validation
+#### TC-CHECKOUT-02 — Submitting empty required fields should show field-specific validation errors
 
-- **testcase_id:** `TC-CHECKOUT-E2E-01`
-- **testcase_title:** Required-field validation
+- **testcase_id:** `TC-CHECKOUT-02`
+- **testcase_title:** Submitting empty required fields should show field-specific validation errors
 - **precondition:** Logged in as the Shopper account, with items in the cart, on `/checkout`.
 - **test_steps:**
   1. Click **Continue** with all fields empty.
@@ -344,10 +355,10 @@ Expected monetary results are expressed as formulas rather than fixed numbers, e
 - **priority:** High
 - **notes:** ⚠️ Error text is wrong for First Name — see BUG-004.
 
-#### TC-CHECKOUT-E2E-02 — Checkout totals are correct
+#### TC-CHECKOUT-03 — Checkout totals should match the expected subtotal, tax, and total
 
-- **testcase_id:** `TC-CHECKOUT-E2E-02`
-- **testcase_title:** Checkout totals are correct
+- **testcase_id:** `TC-CHECKOUT-03`
+- **testcase_title:** Checkout totals should match the expected subtotal, tax, and total
 - **precondition:** Logged in as the Shopper account; cart contains `{qty}` × a product `{product}` (price `{price}`), e.g. `{qty}` = 3.
 - **test_steps:**
   1. Fill First Name / Last Name / Postal Code and click **Continue** to reach the "Order Summary" step.
@@ -357,10 +368,10 @@ Expected monetary results are expressed as formulas rather than fixed numbers, e
 
 ### 6. Account-specific
 
-#### TC-ACCOUNT-E2E-01 — Image-variation account shows correct product images
+#### TC-ACCOUNT-01 — Image-variation account should show product images that match their labels
 
-- **testcase_id:** `TC-ACCOUNT-E2E-01`
-- **testcase_title:** Image-variation account shows correct product images
+- **testcase_id:** `TC-ACCOUNT-01`
+- **testcase_title:** Image-variation account should show product images that match their labels
 - **precondition:** Logged in as the Image-variation account.
 - **test_steps:**
   1. Browse the catalog and inspect each product's image/label.
@@ -368,10 +379,10 @@ Expected monetary results are expressed as formulas rather than fixed numbers, e
 - **priority:** Medium
 - **notes:** ⚠️ Images are mismatched — see BUG-005.
 
-#### TC-ACCOUNT-E2E-02 — Cart-badge account shows an accurate badge count
+#### TC-ACCOUNT-02 — Cart-badge account should show an accurate cart badge count
 
-- **testcase_id:** `TC-ACCOUNT-E2E-02`
-- **testcase_title:** Cart-badge account shows an accurate badge count
+- **testcase_id:** `TC-ACCOUNT-02`
+- **testcase_title:** Cart-badge account should show an accurate cart badge count
 - **precondition:** Logged in as the Cart-badge account.
 - **test_steps:**
   1. Add and remove items, observing the cart badge after each change.
@@ -385,10 +396,10 @@ Expected monetary results are expressed as formulas rather than fixed numbers, e
 
 > A separate responsive dimension (re-versioning core flows at a phone viewport). Run at `mobile_viewport` from `test_data.md` (375 × 812). "Responsive" means: no horizontal scrolling; key controls are visible, correctly sized, and tappable; the flow completes identically to desktop.
 
-### TC-MOB-E2E-01 — Login, catalog, and Add to Cart at mobile viewport
+### TC-MOB-01 — Login, catalog, and Add to Cart at mobile viewport
 
-- **testcase_id:** `TC-MOB-E2E-01`
-- **testcase_title:** Login, catalog, and Add to Cart at mobile viewport
+- **testcase_id:** `TC-MOB-01`
+- **testcase_title:** Login, catalog, and Add to Cart should work at mobile viewport without horizontal scroll
 - **precondition:** None; viewport set to `mobile_viewport`.
 - **test_steps:**
   1. Open the login page and verify the form renders without horizontal scroll.
@@ -399,10 +410,10 @@ Expected monetary results are expressed as formulas rather than fixed numbers, e
 - **priority:** Medium
 - **notes:** —
 
-### TC-MOB-E2E-02 — Cart and checkout at mobile viewport
+### TC-MOB-02 — Cart and checkout at mobile viewport
 
-- **testcase_id:** `TC-MOB-E2E-02`
-- **testcase_title:** Cart and checkout at mobile viewport
+- **testcase_id:** `TC-MOB-02`
+- **testcase_title:** Cart and checkout should render and advance at mobile viewport without horizontal scroll
 - **precondition:** Logged in as the Shopper account, with an item in the cart; viewport set to `mobile_viewport`.
 - **test_steps:**
   1. Open the cart; verify it renders without horizontal scroll.
