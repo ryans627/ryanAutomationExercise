@@ -2,6 +2,7 @@ import { expect } from "@wdio/globals";
 import { HOST, MESSAGES, PATHS, ACCOUNTS } from "../../constants/constants";
 import { CATALOG, SHIPPING_INFO } from "../../constants/testData";
 import galleryPage from "../../pages/galleryPage";
+import header from "../../pages/header";
 import cartPage from "../../pages/cartPage";
 import checkoutPage from "../../pages/checkoutPage";
 import { loginAs } from "../../utils/auth";
@@ -16,7 +17,7 @@ describe("Checkout — regression", () => {
 
   it("TC-CHECKOUT-02: Submitting empty required fields should show field-specific validation errors", async () => {
     await galleryPage.actions.addToCart(hoodie.slug);
-    await galleryPage.actions.goToCart();
+    await header.actions.goToCart();
     await cartPage.actions.proceedToCheckout();
 
     await checkoutPage.actions.continueToSummary();
@@ -35,7 +36,7 @@ describe("Checkout — regression", () => {
   it("TC-CHECKOUT-03: Checkout totals should match the expected subtotal, tax, and total", async () => {
     const qty = 3;
     await galleryPage.actions.addToCart(hoodie.slug, qty);
-    await galleryPage.actions.goToCart();
+    await header.actions.goToCart();
     await cartPage.actions.proceedToCheckout();
 
     await checkoutPage.actions.fillShippingInfo(SHIPPING_INFO);

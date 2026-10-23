@@ -11,8 +11,6 @@ class LoginPage extends Page {
     togglePasswordVisibility: () => getByDataTest(DATATEST.togglePasswordVisibility),
     loginButton: () => getByDataTest(DATATEST.loginButton),
     errorMessage: () => getByDataTest(DATATEST.loginErrorMessage),
-    logoutButton: () => getByDataTest(DATATEST.logoutButton),
-    loggedInUser: () => getByDataTest(DATATEST.loggedInUser),
     practiceAccountButton: (username: string) => getByDataTest(`hint-user-${username}`),
   };
 
@@ -32,9 +30,6 @@ class LoginPage extends Page {
     },
     togglePassword: async () => {
       await this.elements.togglePasswordVisibility().click();
-    },
-    logout: async () => {
-      await this.elements.logoutButton().click();
     },
   };
 }

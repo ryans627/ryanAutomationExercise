@@ -9,7 +9,6 @@ class CartPage extends Page {
   readonly elements = {
     checkoutButton: () => getByDataTest(DATATEST.checkoutButton),
     continueShoppingButton: () => getByDataTest(DATATEST.backToHome),
-    cartBadge: () => getByDataTest(DATATEST.cartBadge),
     subtotal: () => getByDataTest(DATATEST.cartSubtotal),
     tax: () => getByDataTest(DATATEST.cartTax),
     total: () => getByDataTest(DATATEST.cartTotal),
@@ -67,13 +66,6 @@ class CartPage extends Page {
     // The tax rate is shown in the label next to the tax value ("Tax (8%)");
     // the label is the tax value's previous sibling in the app markup.
     getTaxRate: async () => parsePercentage(await this.elements.tax().previousElement().getText()),
-    getCartBadgeCount: async () => {
-      const badge = this.elements.cartBadge();
-      if (!(await badge.isExisting())) {
-        return 0;
-      }
-      return Number(await badge.getText());
-    },
     // Sum of every line item's quantity on the cart page.
     getTotalUnits: async () => {
       return browser.execute(

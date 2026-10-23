@@ -2,6 +2,7 @@ import { expect } from "@wdio/globals";
 import { ACCOUNTS } from "../../constants/constants";
 import { CATALOG } from "../../constants/testData";
 import galleryPage from "../../pages/galleryPage";
+import header from "../../pages/header";
 import cartPage from "../../pages/cartPage";
 import productPage from "../../pages/productPage";
 import { loginAs } from "../../utils/auth";
@@ -24,11 +25,11 @@ describe("Account-specific — regression", () => {
     await loginAs(ACCOUNTS.cartBadge);
 
     await galleryPage.actions.addToCart(hoodie.slug);
-    // await expect(galleryPage.elements.cartBadge()).toHaveText("1"); // actual: 2
+    // await expect(header.elements.cartBadge()).toHaveText("1"); // actual: 2
 
-    await galleryPage.actions.goToCart();
+    await header.actions.goToCart();
     const id = await cartPage.actions.getCartItemId(hoodie.name);
     await cartPage.actions.removeItem(id);
-    await expect(cartPage.elements.cartBadge()).toHaveText("0"); // actual: 1
+    await expect(header.elements.cartBadge()).toHaveText("0"); // actual: 1
   });
 });

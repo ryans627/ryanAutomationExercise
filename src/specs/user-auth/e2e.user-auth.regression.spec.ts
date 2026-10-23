@@ -1,5 +1,6 @@
 import { expect } from "@wdio/globals";
 import { ACCOUNTS, HOST, MESSAGES, PASSWORD, PATHS } from "../../constants/constants";
+import header from "../../pages/header";
 import loginPage from "../../pages/loginPage";
 
 describe("User authentication — regression", () => {
@@ -43,8 +44,8 @@ describe("User authentication — regression", () => {
 
       await loginPage.elements.loginButton().click();
       await expect(browser).toHaveUrl(`${HOST}${PATHS.home}`);
-      await expect(loginPage.elements.loggedInUser()).toHaveText(username);
-      await loginPage.actions.logout();
+      await expect(header.elements.loggedInUser()).toHaveText(username);
+      await header.actions.logout();
       await expect(browser).toHaveUrl(`${HOST}${PATHS.login}`);
     }
   });
@@ -52,11 +53,11 @@ describe("User authentication — regression", () => {
   it.skip("TC-AUTH-05: User session should persist across a page reload", async () => {
     // Known failure: BUG-006 — the session is lost across full page loads.
     await loginPage.actions.login({ username: ACCOUNTS.shopper, password: PASSWORD });
-    await expect(loginPage.elements.loggedInUser()).toHaveText(ACCOUNTS.shopper);
+    await expect(header.elements.loggedInUser()).toHaveText(ACCOUNTS.shopper);
 
     await browser.refresh();
 
-    await expect(loginPage.elements.logoutButton()).toBeDisplayed();
+    await expect(header.elements.logoutButton()).toBeDisplayed();
   });
 
   it("TC-AUTH-06: User should be able to toggle password visibility", async () => {

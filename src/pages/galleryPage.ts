@@ -3,8 +3,7 @@ import { getAllByDataTest, getByDataTest } from "../utils/helpers";
 import { Page } from "./Page";
 
 /**
- * The catalog / home page (`/`). Also hosts the shared header (nav + cart badge)
- * used across the authenticated pages.
+ * The catalog / home page (`/`).
  */
 class GalleryPage extends Page {
   protected readonly path = PATHS.home;
@@ -14,9 +13,6 @@ class GalleryPage extends Page {
     clearFiltersButton: () => getByDataTest(DATATEST.clearFilters),
     categoryFilter: () => getByDataTest(DATATEST.filterCategory),
     sortSelect: () => getByDataTest(DATATEST.sortSelect),
-    cartBadge: () => getByDataTest(DATATEST.cartBadge),
-    navCart: () => getByDataTest(DATATEST.navCart),
-    navShop: () => getByDataTest(DATATEST.navInventory),
     productNameLinks: () => getAllByDataTest(DATATEST.inventoryItemName),
     inventoryTitle: () => getByDataTest(DATATEST.inventoryTitle),
     addToCartButton: (slug: string) => getByDataTest(`add-to-cart-${slug}`),
@@ -57,19 +53,6 @@ class GalleryPage extends Page {
         }
       }
       throw new Error(`No product name link found for slug: ${slug}`);
-    },
-    goToCart: async () => {
-      await this.elements.navCart().click();
-    },
-    goToShop: async () => {
-      await this.elements.navShop().click();
-    },
-    getCartBadgeCount: async () => {
-      const badge = this.elements.cartBadge();
-      if (!(await badge.isExisting())) {
-        return 0;
-      }
-      return Number(await badge.getText());
     },
     getProductCount: async () => (await this.elements.productNameLinks()).length,
     getProductNames: async () => {

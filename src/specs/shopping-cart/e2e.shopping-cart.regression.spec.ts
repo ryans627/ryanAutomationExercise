@@ -2,6 +2,7 @@ import { expect } from "@wdio/globals";
 import { HOST, MESSAGES, PATHS, productPath, ACCOUNTS } from "../../constants/constants";
 import { CATALOG } from "../../constants/testData";
 import galleryPage from "../../pages/galleryPage";
+import header from "../../pages/header";
 import cartPage from "../../pages/cartPage";
 import productPage from "../../pages/productPage";
 import { loginAs } from "../../utils/auth";
@@ -24,10 +25,10 @@ describe("Shopping cart — regression", () => {
     await expect(browser).toHaveUrl(`${HOST}${productPath(hoodie.slug)}`);
     await productPage.actions.setQuantity(hoodie.slug, qty);
     await productPage.actions.addToCart(hoodie.slug);
-    await expect(galleryPage.elements.cartBadge()).toHaveText(String(qty));
+    await expect(header.elements.cartBadge()).toHaveText(String(qty));
 
     // 2. Cart totals match the formula.
-    await galleryPage.actions.goToCart();
+    await header.actions.goToCart();
     const subtotal = round2(hoodie.price * qty);
     const taxRate = await cartPage.actions.getTaxRate();
     const { tax, total } = computeTotals(subtotal, taxRate);
@@ -45,7 +46,7 @@ describe("Shopping cart — regression", () => {
 
     // 4. Remove the item.
     await cartPage.actions.removeItem(id);
-    expect(await cartPage.actions.getCartBadgeCount()).toBe(0);
+    expect(await header.actions.getCartBadgeCount()).toBe(0);
 
     // 5. Empty state + Continue Shopping.
     await expect(cartPage.elements.emptyTitle()).toHaveText(MESSAGES.cartEmpty);

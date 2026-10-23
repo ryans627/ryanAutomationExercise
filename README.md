@@ -45,7 +45,7 @@ npx wdio run ./wdio.conf.ts --spec src/specs/user-auth/e2e.user-auth.sanity.spec
 ```
 src/
 ├── constants/      # URLs, data-test selectors, accounts (constants.ts), product catalog (testData.ts)
-├── pages/          # Page objects (Page base class + login/gallery/product/cart/checkout)
+├── pages/          # Page objects (Page base class + header component + login/gallery/product/cart/checkout)
 ├── specs/          # Mocha specs, organized by feature (sanity + regression levels)
 └── utils/          # Shared helpers (locators, currency/percentage parsing, auth)
 docs/

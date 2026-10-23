@@ -2,6 +2,7 @@ import { expect } from "@wdio/globals";
 import { ACCOUNTS, HOST, MESSAGES, PASSWORD, PATHS } from "../../constants/constants";
 import { CATALOG, SHIPPING_INFO } from "../../constants/testData";
 import galleryPage from "../../pages/galleryPage";
+import header from "../../pages/header";
 import cartPage from "../../pages/cartPage";
 import checkoutPage from "../../pages/checkoutPage";
 import loginPage from "../../pages/loginPage";
@@ -40,14 +41,14 @@ const runResponsiveFlow = async (width: number, height: number) => {
   await assertNoHorizontalScroll();
 
   await loginPage.actions.login({ username: ACCOUNTS.shopper, password: PASSWORD });
-  await loginPage.elements.logoutButton().waitForDisplayed();
+  await header.elements.logoutButton().waitForDisplayed();
   await assertNoHorizontalScroll();
   expect(await galleryPage.actions.getProductCount()).toBe(CATALOG.length);
 
   await galleryPage.actions.addToCart(hoodie.slug);
   await assertNoHorizontalScroll();
 
-  await galleryPage.actions.goToCart();
+  await header.actions.goToCart();
   await assertNoHorizontalScroll();
 
   await cartPage.actions.proceedToCheckout();
@@ -65,10 +66,10 @@ const runResponsiveFlow = async (width: number, height: number) => {
 
   await cartPage.actions.continueShopping();
   await expect(browser).toHaveUrl(`${HOST}${PATHS.home}`);
-  expect(await cartPage.actions.getCartBadgeCount()).toBe(0);
+  expect(await header.actions.getCartBadgeCount()).toBe(0);
   await assertNoHorizontalScroll();
 
-  await galleryPage.actions.goToCart();
+  await header.actions.goToCart();
   await expect(cartPage.elements.emptyTitle()).toHaveText(MESSAGES.cartEmpty);
   await assertNoHorizontalScroll();
 };

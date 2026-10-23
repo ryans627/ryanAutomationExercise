@@ -2,6 +2,7 @@ import { expect } from "@wdio/globals";
 import { HOST, MESSAGES, PATHS, ACCOUNTS } from "../../constants/constants";
 import { CATALOG, SHIPPING_INFO } from "../../constants/testData";
 import galleryPage from "../../pages/galleryPage";
+import header from "../../pages/header";
 import cartPage from "../../pages/cartPage";
 import checkoutPage from "../../pages/checkoutPage";
 import { loginAs } from "../../utils/auth";
@@ -16,7 +17,7 @@ describe("Checkout — sanity", () => {
 
   it("TC-CHECKOUT-01: Checkout should complete through to order confirmation and clear the cart", async () => {
     await galleryPage.actions.addToCart(hoodie.slug);
-    await galleryPage.actions.goToCart();
+    await header.actions.goToCart();
 
     await cartPage.actions.proceedToCheckout();
     await expect(browser).toHaveUrl(`${HOST}${PATHS.checkout}`);
@@ -30,9 +31,9 @@ describe("Checkout — sanity", () => {
 
     await cartPage.actions.continueShopping();
     await expect(browser).toHaveUrl(`${HOST}${PATHS.home}`);
-    expect(await cartPage.actions.getCartBadgeCount()).toBe(0);
+    expect(await header.actions.getCartBadgeCount()).toBe(0);
 
-    await galleryPage.actions.goToCart();
+    await header.actions.goToCart();
     await expect(cartPage.elements.emptyTitle()).toHaveText(MESSAGES.cartEmpty);
   });
 
@@ -42,7 +43,7 @@ describe("Checkout — sanity", () => {
     const bottom = CATALOG[CATALOG.length - 1];
     await galleryPage.actions.addToCart(hoodie.slug);
     await galleryPage.actions.addToCart(bottom.slug);
-    await galleryPage.actions.goToCart();
+    await header.actions.goToCart();
 
     const taxRate = await cartPage.actions.getTaxRate();
     const subtotal = round2(hoodie.price + bottom.price);
@@ -75,6 +76,6 @@ describe("Checkout — sanity", () => {
 
     await cartPage.actions.continueShopping();
     await expect(browser).toHaveUrl(`${HOST}${PATHS.home}`);
-    expect(await cartPage.actions.getCartBadgeCount()).toBe(0);
+    expect(await header.actions.getCartBadgeCount()).toBe(0);
   });
 });
