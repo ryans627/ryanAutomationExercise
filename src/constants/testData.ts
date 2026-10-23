@@ -1,5 +1,5 @@
 /**
- * Shared test fixtures (from `docs/test_data.md`).
+ * Shared test fixtures.
  * Kept separate from `constants.ts`, which holds app-level constants only.
  */
 
