@@ -18,11 +18,13 @@ class GalleryPage extends Page {
     navCart: () => getByDataTest(DATATEST.navCart),
     navShop: () => getByDataTest(DATATEST.navInventory),
     productNameLinks: () => getAllByDataTest(DATATEST.inventoryItemName),
+    inventoryTitle: () => getByDataTest(DATATEST.inventoryTitle),
     addToCartButton: (slug: string) => getByDataTest(`add-to-cart-${slug}`),
   };
 
   readonly actions = {
     search: async (term: string) => {
+      await this.elements.searchBox().clearValue();
       await this.elements.searchBox().setValue(term);
     },
     clearFilters: async () => {
@@ -51,6 +53,11 @@ class GalleryPage extends Page {
         return 0;
       }
       return Number(await badge.getText());
+    },
+    getProductCount: async () => (await this.elements.productNameLinks()).length,
+    getProductNames: async () => {
+      const links = await this.elements.productNameLinks();
+      return Promise.all([...links].map((l) => l.getText()));
     },
   };
 }

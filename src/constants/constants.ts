@@ -39,6 +39,7 @@ export const DATATEST = {
   filterCategory: "filter-category",
   sortSelect: "sort-select",
   inventoryItemName: "inventory-item-name",
+  inventoryTitle: "inventory-title",
   backToInventoryLink: "back-to-inventory-link",
   checkoutFirstName: "checkout-first-name",
   checkoutLastName: "checkout-last-name",
