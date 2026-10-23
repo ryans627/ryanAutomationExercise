@@ -1,3 +1,12 @@
+import { mkdirSync, rmSync } from "node:fs";
+import { addAttachment } from "@wdio/allure-reporter";
+
+// Parallelism and browser mode are overridable via environment variables:
+//   MAX_INSTANCES=1  run spec files one at a time (default 10 = parallel)
+//   HEADLESS=1       run Chrome without a visible window
+const maxInstances = Number(process.env.MAX_INSTANCES ?? 10);
+const isHeadless = process.env.HEADLESS === "1";
+
 export const config: WebdriverIO.Config = {
   //
   // ====================
@@ -43,7 +52,7 @@ export const config: WebdriverIO.Config = {
   // and 30 processes will get spawned. The property handles how many capabilities
   // from the same test should run tests.
   //
-  maxInstances: 10,
+  maxInstances,
   //
   // If you have trouble getting all important capabilities together, check out the
   // Sauce Labs platform configurator - a great tool to configure your capabilities:
@@ -52,6 +61,7 @@ export const config: WebdriverIO.Config = {
   capabilities: [
     {
       browserName: "chrome",
+      ...(isHeadless ? { "goog:chromeOptions": { args: ["--headless=new"] } } : {}),
     },
   ],
 
@@ -125,7 +135,18 @@ export const config: WebdriverIO.Config = {
   // Test reporter for stdout.
   // The only one supported by default is 'dot'
   // see also: https://webdriver.io/docs/dot-reporter
-  reporters: ["spec"],
+  reporters: [
+    "spec",
+    [
+      "allure",
+      {
+        outputDir: "allure-results",
+        // Capture screenshots manually in `afterTest` on failure only; let the
+        // spec reporter stay fast by not screenshotting every command.
+        disableWebdriverScreenshotsReporting: true,
+      },
+    ],
+  ],
 
   // Options to be passed to Mocha.
   // See the full list at http://mochajs.org/
@@ -147,8 +168,11 @@ export const config: WebdriverIO.Config = {
    * @param {object} config wdio configuration object
    * @param {Array.<Object>} capabilities list of capabilities details
    */
-  // onPrepare: function (config, capabilities) {
-  // },
+  onPrepare: function () {
+    // Start each run with a clean slate so the report reflects only this run.
+    rmSync("allure-results", { recursive: true, force: true });
+    rmSync("screenshots", { recursive: true, force: true });
+  },
   /**
    * Gets executed before a worker process is spawned and can be used to initialize specific service
    * for that worker as well as modify runtime environments in an async fashion.
@@ -228,8 +252,17 @@ export const config: WebdriverIO.Config = {
    * @param {boolean} result.passed    true if test has passed, otherwise false
    * @param {object}  result.retries   information about spec related retries, e.g. `{ attempts: 0, limit: 0 }`
    */
-  // afterTest: function(test, context, { error, result, duration, passed, retries }) {
-  // },
+  afterTest: async function (test, _context, { error }) {
+    if (error) {
+      // Attach a screenshot to the Allure report so the failing step is visible.
+      // `saveScreenshot` requires the target directory to already exist.
+      const safeName = (test.title || "failure").replace(/[^a-z0-9]+/gi, "-");
+      mkdirSync("screenshots", { recursive: true });
+      const filepath = `screenshots/${safeName}-${Date.now()}.png`;
+      const png = await browser.saveScreenshot(filepath, { fullPage: true });
+      await addAttachment(test.title || "failure", png, "image/png");
+    }
+  },
 
   /**
    * Hook that gets executed after the suite has ended

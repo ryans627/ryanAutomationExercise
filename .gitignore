@@ -9,5 +9,10 @@ node_modules/
 *.log
 npm-debug.log*
 
+# Test reports
+allure-results/
+allure-report/
+screenshots/
+
 # OS
 .DS_Store

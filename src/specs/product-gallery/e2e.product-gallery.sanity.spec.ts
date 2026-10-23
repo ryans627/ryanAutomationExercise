@@ -41,7 +41,7 @@ describe("Product gallery — sanity", () => {
     }
   });
 
-  it.skip("TC-GALLERY-04: Catalog should sort by name and price in both ascending and descending order", async () => {
+  it("TC-GALLERY-04: Catalog should sort by name and price in both ascending and descending order", async () => {
     // Known failure: BUG-002 — "Price: High to Low" sorts ascending.
     const byNameAsc = [...CATALOG].sort((a, b) => a.name.localeCompare(b.name)).map((p) => p.name);
     const byNameDesc = [...byNameAsc].reverse();
