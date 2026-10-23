@@ -1,5 +1,5 @@
 import { DATATEST, PATHS } from "../constants/constants";
-import { getByDataTest } from "../utils/helpers";
+import { getByDataTest, parseCurrency, parsePercentage } from "../utils/helpers";
 import { Page } from "./Page";
 
 /** Cart page (`/cart`). */
@@ -10,24 +10,40 @@ class CartPage extends Page {
     checkoutButton: () => getByDataTest(DATATEST.checkoutButton),
     continueShoppingButton: () => getByDataTest(DATATEST.backToHome),
     cartBadge: () => getByDataTest(DATATEST.cartBadge),
-    qtyDecreaseButton: (slug: string) => getByDataTest(`qty-decrease-${slug}`),
-    qtyIncreaseButton: (slug: string) => getByDataTest(`qty-increase-${slug}`),
-    qtyValue: (slug: string) => getByDataTest(`qty-value-${slug}`),
+    subtotal: () => getByDataTest(DATATEST.cartSubtotal),
+    tax: () => getByDataTest(DATATEST.cartTax),
+    total: () => getByDataTest(DATATEST.cartTotal),
+    emptyTitle: () => getByDataTest(DATATEST.cartEmptyTitle),
+    emptyMessage: () => getByDataTest(DATATEST.cartEmptyMessage),
+    qtyDecreaseButton: (id: string) => getByDataTest(`decrease-qty-item-${id}`),
+    qtyIncreaseButton: (id: string) => getByDataTest(`increase-qty-item-${id}`),
+    qtyValue: (id: string) => getByDataTest(`quantity-item-${id}`),
     removeItemButton: (id: string) => getByDataTest(`remove-item-${id}`),
   };
 
   readonly actions = {
-    increaseQuantity: async (slug: string) => {
-      await this.elements.qtyIncreaseButton(slug).click();
+    increaseQuantity: async (id: string) => {
+      await this.elements.qtyIncreaseButton(id).click();
     },
-    decreaseQuantity: async (slug: string) => {
-      await this.elements.qtyDecreaseButton(slug).click();
+    decreaseQuantity: async (id: string) => {
+      await this.elements.qtyDecreaseButton(id).click();
     },
-    getQuantity: async (slug: string) => {
-      return Number(await this.elements.qtyValue(slug).getText());
+    getQuantity: async (id: string) => {
+      return Number(await this.elements.qtyValue(id).getText());
     },
     removeItem: async (id: string) => {
       await this.elements.removeItemButton(id).click();
+    },
+    // Resolve a cart line item's numeric id from its product name.
+    getCartItemId: async (name: string): Promise<string> => {
+      return browser.execute((productName: string): string => {
+        const items = Array.from(document.querySelectorAll('[data-test="cart-item"]'));
+        const item = items.find(
+          (el) => el.querySelector('[data-test="cart-item-name"]')?.textContent?.trim() === productName
+        );
+        const inc = item?.querySelector('[data-test^="increase-qty-item-"]');
+        return inc?.getAttribute("data-test")?.replace("increase-qty-item-", "") ?? "";
+      }, name);
     },
     proceedToCheckout: async () => {
       await this.elements.checkoutButton().click();
@@ -35,6 +51,10 @@ class CartPage extends Page {
     continueShopping: async () => {
       await this.elements.continueShoppingButton().click();
     },
+    getSubtotal: async () => parseCurrency(await this.elements.subtotal().getText()),
+    getTax: async () => parseCurrency(await this.elements.tax().getText()),
+    getTotal: async () => parseCurrency(await this.elements.total().getText()),
+    getTaxRate: async () => parsePercentage(await this.elements.tax().previousElement().getText()),
     getCartBadgeCount: async () => {
       const badge = this.elements.cartBadge();
       if (!(await badge.isExisting())) {

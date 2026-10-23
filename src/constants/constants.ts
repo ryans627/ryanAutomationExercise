@@ -2,7 +2,7 @@ import { getCaseInsensitiveMsg } from "../utils/helpers";
 
 /**
  * Static constants for the app under test ("Morrow Supply").
- * Keep in sync with `docs/test_data.md` — do not hardcode these strings in page objects.
+ * Keep in sync with the app under test — do not hardcode these strings in page objects.
  */
 
 /** Base URL. */
@@ -48,9 +48,26 @@ export const DATATEST = {
   checkoutButton: "checkout-button",
   finishButton: "finish-button",
   backToHome: "back-to-home",
+  cartSubtotal: "cart-subtotal",
+  cartTax: "cart-tax",
+  cartTotal: "cart-total",
+  cartEmptyTitle: "cart-empty-title",
+  cartEmptyMessage: "cart-empty-message",
+  firstNameError: "first-name-error",
+  lastNameError: "last-name-error",
+  postalCodeError: "postal-code-error",
+  checkoutSubtotal: "checkout-subtotal",
+  checkoutTax: "checkout-tax",
+  checkoutTotal: "checkout-total",
+  checkoutItemName: "checkout-item-name",
+  checkoutItemQty: "checkout-item-qty",
+  checkoutItemSubtotal: "checkout-item-subtotal",
+  shippingInfo: "shipping-info",
+  checkoutSuccessTitle: "checkout-success-title",
+  checkoutSuccessMessage: "checkout-success-message",
 } as const;
 
-/** Test accounts (from `docs/test_data.md`). */
+/** Test accounts. */
 export const ACCOUNTS = {
   shopper: "fern_signal",
   locked: "quiet_lock",
@@ -67,4 +84,8 @@ export const MESSAGES = {
   passwordRequired: getCaseInsensitiveMsg("Password is required"),
   invalidCredentials: getCaseInsensitiveMsg("Username and password do not match any user in this service"),
   lockedOut: getCaseInsensitiveMsg("Sorry, this user has been locked out"),
+  lastNameRequired: getCaseInsensitiveMsg("Last Name is required"),
+  postalCodeRequired: getCaseInsensitiveMsg("Postal Code is required"),
+  orderPlaced: getCaseInsensitiveMsg("Order Placed!"),
+  cartEmpty: getCaseInsensitiveMsg("Your cart is empty"),
 } as const;

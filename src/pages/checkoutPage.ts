@@ -1,5 +1,5 @@
 import { DATATEST, PATHS } from "../constants/constants";
-import { getByDataTest } from "../utils/helpers";
+import { getByDataTest, parseCurrency, parsePercentage } from "../utils/helpers";
 import { Page } from "./Page";
 
 /** Checkout page (`/checkout`). */
@@ -12,6 +12,18 @@ class CheckoutPage extends Page {
     postalCodeInput: () => getByDataTest(DATATEST.checkoutPostalCode),
     continueButton: () => getByDataTest(DATATEST.continueToSummary),
     finishButton: () => getByDataTest(DATATEST.finishButton),
+    firstNameError: () => getByDataTest(DATATEST.firstNameError),
+    lastNameError: () => getByDataTest(DATATEST.lastNameError),
+    postalCodeError: () => getByDataTest(DATATEST.postalCodeError),
+    subtotal: () => getByDataTest(DATATEST.checkoutSubtotal),
+    tax: () => getByDataTest(DATATEST.checkoutTax),
+    total: () => getByDataTest(DATATEST.checkoutTotal),
+    itemName: () => getByDataTest(DATATEST.checkoutItemName),
+    itemQty: () => getByDataTest(DATATEST.checkoutItemQty),
+    itemSubtotal: () => getByDataTest(DATATEST.checkoutItemSubtotal),
+    shippingInfo: () => getByDataTest(DATATEST.shippingInfo),
+    successTitle: () => getByDataTest(DATATEST.checkoutSuccessTitle),
+    successMessage: () => getByDataTest(DATATEST.checkoutSuccessMessage),
   };
 
   readonly actions = {
@@ -24,6 +36,9 @@ class CheckoutPage extends Page {
       lastName: string;
       postalCode: string;
     }) => {
+      await this.elements.firstNameInput().clearValue();
+      await this.elements.lastNameInput().clearValue();
+      await this.elements.postalCodeInput().clearValue();
       await this.elements.firstNameInput().setValue(firstName);
       await this.elements.lastNameInput().setValue(lastName);
       await this.elements.postalCodeInput().setValue(postalCode);
@@ -34,6 +49,10 @@ class CheckoutPage extends Page {
     finish: async () => {
       await this.elements.finishButton().click();
     },
+    getSubtotal: async () => parseCurrency(await this.elements.subtotal().getText()),
+    getTax: async () => parseCurrency(await this.elements.tax().getText()),
+    getTotal: async () => parseCurrency(await this.elements.total().getText()),
+    getTaxRate: async () => parsePercentage(await this.elements.tax().previousElement().getText()),
   };
 }
 

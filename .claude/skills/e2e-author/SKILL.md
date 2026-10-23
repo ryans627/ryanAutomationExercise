@@ -13,8 +13,9 @@ gotchas, using the existing pages/specs as the reference style.
 
 1. Find the test case in `docs/testcases.md` (IDs are `TC-{MODULE}-{NN}`). If it
    doesn't exist, add it there first — specs mirror the plan.
-2. Check `docs/test_data.md` for selectors, accounts, catalog, and constants. New
-   `data-test` selectors must be added to both `test_data.md` and `DATATEST`.
+2. Check `src/constants/constants.ts` (`DATATEST`, `ACCOUNTS`, `MESSAGES`) and
+   `src/constants/testData.ts` (`CATALOG`) for the data you need. New `data-test`
+   selectors must be added to `DATATEST`.
 3. Check `docs/bugs.md` for known failures — reference them as `BUG-xxx`, mark
    affected tests `.skip`, and note it in the test-case `notes`.
 
@@ -22,9 +23,8 @@ gotchas, using the existing pages/specs as the reference style.
 
 - Page objects: `src/pages/*.ts` — one per page, each extending the `Page` base.
 - Specs: `src/specs/{module}/e2e.{module}.{level}.spec.ts`, `level` is `sanity`
-  or `regression`. Folders: `user-auth`, `product-gallery`, `product-detail`,
-  `shopping-cart`, `checkout-flow`, `mobile`, `journey`.
-- Constants: `src/constants/constants.ts`. Helpers: `src/utils/helpers.ts`.
+  or `regression`. Folders: `user-auth`, `product-gallery`, `checkout-flow`, `mobile`.
+- Constants: `src/constants/constants.ts` + `src/constants/testData.ts`. Helpers: `src/utils/helpers.ts`.
 
 ## Page object conventions
 

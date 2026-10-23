@@ -31,15 +31,18 @@ class GalleryPage extends Page {
       await this.elements.clearFiltersButton().click();
     },
     // Assumes the category <select> option text matches the category name
-    // ("Apparel", "Accessories", ...). Values are not documented in test_data.md.
+    // ("Apparel", "Accessories", ...). Values are not documented in testData.ts.
     selectCategory: async (category: string) => {
       await this.elements.categoryFilter().selectByVisibleText(category);
     },
     selectSort: async (optionValue: string) => {
       await this.elements.sortSelect().selectByAttribute("value", optionValue);
     },
-    addToCart: async (slug: string) => {
-      await this.elements.addToCartButton(slug).click();
+    addToCart: async (slug: string, qty = 1) => {
+      for (let i = 0; i < qty; i++) {
+        await this.elements.addToCartButton(slug).click();
+        if (i < qty - 1) await browser.pause(400);
+      }
     },
     goToCart: async () => {
       await this.elements.navCart().click();
